@@ -6,15 +6,17 @@
     <title>Document</title>
 </head>
 <body>
-    <?php include "components/sidebar.php" ?>
+    <?php  
+        include "components/sidebar.php";
+        include "backend/database.php";
+    ?>
     <h1>EMPLOYEE PAGE</h1>
     <div>
         <?php
             echo "<br>";
-            include "backend/database.php";
 
-            $users = "SELECT * FROM employeeinformation";
-            $users_results = mysqli_query($conn, $users);
+            $employees = "SELECT * FROM employeeinformation";
+            $employees_results = mysqli_query($conn, $employees);
 
             echo "<table border='1px'>
                 <tr>
@@ -26,8 +28,8 @@
                     <th>Contact</th>
                 </tr> ";
 
-            if (mysqli_num_rows($users_results) > 0) {
-                while ($row = mysqli_fetch_assoc($users_results)) {
+            if (mysqli_num_rows($employees_results) > 0) {
+                while ($row = mysqli_fetch_assoc($employees_results)) {
                     echo "<tr>";
                     echo "<td>" . $row["name"]."</td>".  
                          "<td>" . $row["position"]."</td>".
@@ -38,7 +40,7 @@
                     echo "<tr>";
                 }
             } else {
-                echo "No users found.";
+                echo "No employees found.";
             }
         ?>
     </div>
