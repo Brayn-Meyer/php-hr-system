@@ -38,7 +38,7 @@
                     echo "<tr>";
                 }
             } else {
-                echo "No payrolls found.";
+                echo "No leave request found.";
             }
         ?>
     </div>
