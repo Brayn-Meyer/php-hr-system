@@ -18,16 +18,24 @@
             $payrolls = "SELECT employeeInformation.name, employeeInformation.position, payrolldata.hoursWorked, payrolldata.leaveDeductions, payrolldata.finalSalary FROM employeeInformation INNER JOIN payrolldata ON employeeInformation.employeeId = payrolldata.employeeId";
             $payrolls_results = mysqli_query($conn, $payrolls);
 
+            echo "<table border='1px'>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Hours Worked</th>
+                    <th>Leave Days Taken</th>
+                    <th>Final Salary</th>
+                </tr> ";
+            
             if (mysqli_num_rows($payrolls_results) > 0) {
                 while ($row = mysqli_fetch_assoc($payrolls_results)) {
-                    echo "<div>";
-                    echo "<h3>" . $row["name"]."</h3>".  
-                         "<h5>" . $row["position"]."</h5>".
-                         "<p>" . $row["hoursWorked"]."</p>" .
-                         "<p>" . $row["leaveDeductions"]."</p>".
-                         "<p>" . $row["finalSalary"]."</p>";
-                    echo "</div>";
-                    echo "<br>";
+                    echo "<tr>";
+                    echo "<td>" . $row["name"]."</td>".  
+                         "<td>" . $row["position"]."</td>".
+                         "<td>" . $row["hoursWorked"]."</td>" .
+                         "<td>" . $row["leaveDeductions"]."</td>".
+                         "<td>" . $row["finalSalary"]."</td>";
+                    echo "<tr>";
                 }
             } else {
                 echo "No payrolls found.";
