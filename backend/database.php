@@ -6,12 +6,9 @@
     $conn = "";
 
     try {
-        $conn = mysqli_connect($db_server, $db_user, $db_password, $db_name);
-    } catch (mysqli_sql_exception) {
-        echo "Database was not connected <br>";
-    }
-
-    if ($conn) {
-        // echo "Database is connected <br>";
+        $pdo = new PDO("mysql:host=$db_server;dbname=$db_name", $db_user, $db_password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        die("Could not connect to the database: " . $e->getMessage());
     }
 ?>
