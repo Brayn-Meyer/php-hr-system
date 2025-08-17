@@ -8,16 +8,34 @@
         $pdo->beginTransaction();
 
         // Insert flight if available
-        if (isset($_SESSION['employee'])) {
-            $f = $_SESSION['employee'];
+        if (isset($_SESSION['cre_employee'])) {
+            $e = $_SESSION['cre_employee'];
             $stmt = $pdo->prepare("INSERT INTO employeeinformation (name, position, department, salary, employmentHistory, contact) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->execute([
-                $f['e_name'] ?? null,
-                $f['e_position'] ?? null,
-                $f['e_department'] ?? null,
-                $f['e_salary'] ?? null,
-                $f['e_employment_history'] ?? null,
-                $f['e_contact'] ?? null
+                $e['e_name'] ?? null,
+                $e['e_position'] ?? null,
+                $e['e_department'] ?? null,
+                $e['e_salary'] ?? null,
+                $e['e_employment_history'] ?? null,
+                $e['e_contact'] ?? null
+            ]);
+
+            $Id = $pdo->lastInsertId();
+
+            $stmt = $pdo->prepare("INSERT INTO payrolldata (employeeId, hoursWorked, leaveDeductions, finalSalary) VALUES (?, ?, ?, ?)");
+            $stmt->execute([
+                $Id,
+                160,
+                0,
+                $e['e_salary'] ?? null,
+            ]);
+
+            $stmt = $pdo->prepare("INSERT INTO performancereviews (employeeId, reviewDate, rating, status) VALUES (?, ?, ?, ?)");
+            $stmt->execute([
+                $Id,
+                date('Y-m-d'),
+                1,
+                "Draft"
             ]);
         }
 
@@ -30,7 +48,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Added</title>
+    <title>Add Employee</title>
 </head>
 <body>
     <div>

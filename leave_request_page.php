@@ -16,9 +16,9 @@
             echo "<br>";
 
             $leave = "SELECT employeeInformation.name, employeeInformation.department, leaverequests.date, leaverequests.reason, leaverequests.status FROM employeeInformation INNER JOIN leaverequests ON employeeInformation.employeeId = leaverequests.employeeId";
-            $leave_results = mysqli_query($conn, $leave);
+            $stmt = $pdo->query($leave);
 
-            echo "<table border='1px'>
+            echo "<table>
                 <tr>
                     <th>Name</th>
                     <th>Department</th>
@@ -27,8 +27,8 @@
                     <th>Status</th>
                 </tr> ";
             
-            if (mysqli_num_rows($leave_results) > 0) {
-                while ($row = mysqli_fetch_assoc($leave_results)) {
+            if ($stmt->rowCount() > 0) {
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<tr>";
                     echo "<td>" . $row["name"]."</td>".  
                          "<td>" . $row["department"]."</td>".
