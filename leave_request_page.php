@@ -18,6 +18,7 @@
         <form class="create_leave_form" action="create_employee.php" method="post" style="display: none;">
             <label for="l_name">Name : </label>
             <select name="l_name" id="l_name_select">
+                <option readonly >Select an Employee</option>
                 <?php
                     $employees = "SELECT name, department FROM employeeInformation";
                     $stmt = $pdo->query($employees);
