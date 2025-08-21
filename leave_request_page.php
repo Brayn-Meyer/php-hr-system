@@ -60,15 +60,15 @@
                     <th>Status</th>
                 </tr> ";
             
-            if ($stmt->rowCount() > 0) {
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo    "<tr>";
-                    echo        "<td>" . $row["name"]."</td>".  
-                                "<td>" . $row["department"]."</td>".
-                                "<td>" . $row["date"]."</td>" .
-                                "<td>" . $row["reason"]."</td>" .
-                                "<td>" . $row["status"]."</td>";
-                    echo    "</tr>";
+            if (mysqli_num_rows($leave_results) > 0) {
+                while ($row = mysqli_fetch_assoc($leave_results)) {
+                    echo "<tr>";
+                    echo "<td>" . $row["name"]."</td>".  
+                         "<td>" . $row["department"]."</td>".
+                         "<td>" . $row["date"]."</td>" .
+                         "<td>" . $row["reason"]."</td>" .
+                         "<td>" . $row["status"]."</td>";
+                    echo "<tr>";
                 }
             } else {
                 echo "No leave request found.";
