@@ -16,9 +16,9 @@
             echo "<br>";
 
             $payrolls = "SELECT employeeInformation.name, employeeInformation.position, payrolldata.hoursWorked, payrolldata.leaveDeductions, payrolldata.finalSalary FROM employeeInformation INNER JOIN payrolldata ON employeeInformation.employeeId = payrolldata.employeeId";
-            $payrolls_results = mysqli_query($conn, $payrolls);
+            $stmt = $pdo->query($payrolls);
 
-            echo "<table border='1px'>
+            echo "<table>
                 <tr>
                     <th>Name</th>
                     <th>Position</th>
@@ -27,8 +27,8 @@
                     <th>Final Salary</th>
                 </tr> ";
             
-            if (mysqli_num_rows($payrolls_results) > 0) {
-                while ($row = mysqli_fetch_assoc($payrolls_results)) {
+            if ($stmt->rowCount() > 0) {
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<tr>";
                     echo "<td>" . $row["name"]."</td>".  
                          "<td>" . $row["position"]."</td>".

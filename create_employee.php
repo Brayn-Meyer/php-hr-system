@@ -3,7 +3,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Save employee data from POST to session
-        $_SESSION['employee'] = [
+        $_SESSION['cre_employee'] = [
             'e_name' => $_POST['e_name'] ?? null,
             'e_position' => $_POST['e_position'] ?? null,
             'e_department' => $_POST['e_department'] ?? null,

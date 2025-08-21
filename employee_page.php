@@ -50,24 +50,45 @@
                     <th>Salary</th>
                     <th>Employment History</th>
                     <th>Contact</th>
-                    <th></th>
-                </tr> ";
+                    <th>Actions</th>
+                </tr>";
 
             if ($stmt->rowCount() > 0) {
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<tr>";
-                    echo "<td>" . $row["name"]."</td>".  
-                         "<td>" . $row["position"]."</td>".
-                         "<td>" . $row["department"]."</td>" .
-                         "<td>" . $row["salary"]."</td>".
-                         "<td>" . $row["employmentHistory"]."</td>".
-                         "<td>" . $row["contact"]."</td>" .
-                         "<td><button class='edit_button'>Edit</button> <button class='delete_button'>Delete</button></td>";
+                    echo "<td>" . $row["name"] . "</td>" .
+                        "<td>" . $row["position"] . "</td>" .
+                        "<td>" . $row["department"] . "</td>" .
+                        "<td>" . $row["salary"] . "</td>" .
+                        "<td>" . $row["employmentHistory"] . "</td>" .
+                        "<td>" . $row["contact"] . "</td>" .
+                        "<td>
+                            <form method='POST' action='edit_employee_p1.php' style='display:inline;'>
+                                <input type='hidden' name='id' value='" . $row['employeeId'] . "'>
+                                <input type='hidden' name='name' value='" . $row['name'] . "'>
+                                <input type='hidden' name='position' value='" . $row['position'] . "'>
+                                <input type='hidden' name='department' value='" . $row['department'] . "'>
+                                <input type='hidden' name='salary' value='" . $row['salary'] . "'>
+                                <input type='hidden' name='employmentHistory' value='" . $row['employmentHistory'] . "'>
+                                <input type='hidden' name='contact' value='" . $row['contact'] . "'>
+                                <button type='submit'>
+                                    Edit
+                                </button>
+                            </form>
+                            <form method='POST' action='delete_employee.php' style='display:inline;'>
+                                <input type='hidden' name='id' value='" . $row['employeeId'] . "'>
+                                <button type='submit' onclick=\"return confirm('Are you sure you want to delete this record?');\">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>";
                     echo "</tr>";
                 }
             } else {
-                echo "No employees found.";
+                echo "<tr><td colspan='7'>No employees found.</td></tr>";
             }
+
+            echo "</table>";
         ?>
     </div>
 </body>

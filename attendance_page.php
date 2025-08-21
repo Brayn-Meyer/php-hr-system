@@ -16,9 +16,9 @@
             echo "<br>";
 
             $attendance = "SELECT employeeInformation.name, employeeInformation.department, attendancerecords.date, attendancerecords.status FROM employeeInformation INNER JOIN attendancerecords ON employeeInformation.employeeId = attendancerecords.employeeId";
-            $attendance_results = mysqli_query($conn, $attendance);
+            $stmt = $pdo->query($attendance);
 
-            echo "<table border='1px'>
+            echo "<table>
                 <tr>
                     <th>Name</th>
                     <th>Department</th>
@@ -26,8 +26,8 @@
                     <th>Status</th>
                 </tr> ";
             
-            if (mysqli_num_rows($attendance_results) > 0) {
-                while ($row = mysqli_fetch_assoc($attendance_results)) {
+            if ($stmt->rowCount() > 0) {
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<tr>";
                     echo "<td>" . $row["name"]."</td>".  
                          "<td>" . $row["department"]."</td>".
