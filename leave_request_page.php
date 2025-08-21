@@ -17,30 +17,28 @@
     <div>
         <form class="create_leave_form" action="create_employee.php" method="post" style="display: none;">
             <label for="l_name">Name : </label>
-            <select name="l_name">
+            <select name="l_name" id="l_name_select">
                 <?php
                     $employees = "SELECT name, department FROM employeeInformation";
                     $stmt = $pdo->query($employees);
 
                     if ($stmt->rowCount() > 0) {
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                            echo    "<option> "
-                                        . $row["name"] .
-                                    "</option>";
+                            echo "<option value='" . htmlspecialchars($row["name"]) . "' data-department='" . htmlspecialchars($row["department"]) . "'>"
+                                    . htmlspecialchars($row["name"]) .
+                                "</option>";
                         }
                     }
-
-                    echo "</select>
-                            <br>
-                            <label for='l_department'>Department : </label>
-                            <input name='l_department' type='readonly' value='$row[department]'>";
                 ?>
-            
+            </select>
             <br>
-            <label for="l_date">Salary : </label>
+            <label for='l_department'>Department : </label>
+            <input id="l_department" name='l_department' type='text' readonly>
+            <br>
+            <label for="l_date">Date : </label>
             <input name="l_date" type="date">
             <br>
-            <label for="l_reason">Department : </label>
+            <label for="l_reason">Reason : </label>
             <input name="l_reason" type="text">
             <br><br>
             <button type="submit">Submit</button>
@@ -60,14 +58,14 @@
                     <th>Status</th>
                 </tr> ";
             
-            if (mysqli_num_rows($leave_results) > 0) {
-                while ($row = mysqli_fetch_assoc($leave_results)) {
+            if ($stmt->rowCount() > 0) {
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<tr>";
                     echo "<td>" . $row["name"]."</td>".  
-                         "<td>" . $row["department"]."</td>".
-                         "<td>" . $row["date"]."</td>" .
-                         "<td>" . $row["reason"]."</td>" .
-                         "<td>" . $row["status"]."</td>";
+                            "<td>" . $row["department"]."</td>".
+                            "<td>" . $row["date"]."</td>" .
+                            "<td>" . $row["reason"]."</td>" .
+                            "<td>" . $row["status"]."</td>";
                     echo "<tr>";
                 }
             } else {
@@ -83,6 +81,14 @@
 
         toggleBtn.addEventListener("click", () => {
             form.style.display = form.style.display === "none" ? "block" : "none";
+        });
+
+        const nameSelect = document.getElementById("l_name_select");
+        const departmentInput = document.getElementById("l_department");
+
+        nameSelect.addEventListener("change", () => {
+            const selectedOption = nameSelect.options[nameSelect.selectedIndex];
+            departmentInput.value = selectedOption.getAttribute("data-department");
         });
     });
 </script>
