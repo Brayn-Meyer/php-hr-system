@@ -3,13 +3,13 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Save employee data from POST to session
-        $_SESSION['cre_employee'] = [
-            'e_name' => $_POST['e_name'] ?? null,
-            'e_position' => $_POST['e_position'] ?? null,
-            'e_department' => $_POST['e_department'] ?? null,
-            'e_salary' => $_POST['e_salary'] ?? null,
-            'e_employment_history' => $_POST['e_employment_history'] ?? null,
-            'e_contact' => $_POST['e_contact'] ?? null,
+        $_SESSION['create_employee'] = [
+            'employee_name' => $_POST['employee_name'] ?? null,
+            'employee_position' => $_POST['employee_position'] ?? null,
+            'employee_department' => $_POST['employee_department'] ?? null,
+            'employee_salary' => $_POST['employee_salary'] ?? null,
+            'employee_employment_history' => $_POST['employee_employment_history'] ?? null,
+            'employee_contact' => $_POST['employee_contact'] ?? null,
         ];
 
         // After processing, redirect to confirmation page
@@ -17,7 +17,7 @@
         exit;
     } else {
         // If accessed directly, redirect back to booking form
-        header("Location: employee_pagephp");
+        header("Location: employee_page.php");
         exit;
     }
 ?>

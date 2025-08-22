@@ -15,9 +15,9 @@
     <br>
     <br>
     <div>
-        <form class="create_leave_form" action="create_employee.php" method="post" style="display: none;">
-            <label for="l_name">Name : </label>
-            <select name="l_name" id="l_name_select">
+        <form class="create_leave_form" action="create_leave.php" method="post" style="display: none;">
+            <label for="leave_name">Name : </label>
+            <select name="leave_name" id="leave_name_select" require>
                 <option readonly >Select an Employee</option>
                 <?php
                     $employees = "SELECT name, department FROM employeeInformation";
@@ -33,14 +33,14 @@
                 ?>
             </select>
             <br>
-            <label for='l_department'>Department : </label>
-            <input id="l_department" name='l_department' type='text' readonly>
+            <label for='leave_department'>Department : </label>
+            <input id="leave_department" name='leave_department' type='text' readonly>
             <br>
-            <label for="l_date">Date : </label>
-            <input name="l_date" type="date">
+            <label for="leave_date">Date : </label>
+            <input name="leave_date" type="date" require>
             <br>
-            <label for="l_reason">Reason : </label>
-            <input name="l_reason" type="text">
+            <label for="leave_reason">Reason : </label>
+            <input name="leave_reason" type="text" require>
             <br><br>
             <button type="submit">Submit</button>
         </form>
@@ -57,6 +57,7 @@
                     <th>Date</th>
                     <th>Reason</th>
                     <th>Status</th>
+                    <th>Actions</th>
                 </tr> ";
             
             if ($stmt->rowCount() > 0) {
@@ -66,7 +67,24 @@
                             "<td>" . $row["department"]."</td>".
                             "<td>" . $row["date"]."</td>" .
                             "<td>" . $row["reason"]."</td>" .
-                            "<td>" . $row["status"]."</td>";
+                            "<td>" . $row["status"]."</td>" .
+                            "<td>";
+                                if ($row["status"] == "Pending") {
+                                    echo   "<form>
+                                                <input type='text' value='Approved' hidden>
+                                                <button>Approve</button>
+                                            </form>
+                                            <form>
+                                                <input type='text' value='Denied' hidden>
+                                                <button>Deny</button>
+                                            </form>";
+                                }
+                                
+                                echo   "<form>
+                                            <button>Edit</button>
+                                            <button>Delete</button>
+                                        </form>
+                            </td>";
                     echo "<tr>";
                 }
             } else {
@@ -84,8 +102,8 @@
             form.style.display = form.style.display === "none" ? "block" : "none";
         });
 
-        const nameSelect = document.getElementById("l_name_select");
-        const departmentInput = document.getElementById("l_department");
+        const nameSelect = document.getElementById("leave_name_select");
+        const departmentInput = document.getElementById("leave_department");
 
         nameSelect.addEventListener("change", () => {
             const selectedOption = nameSelect.options[nameSelect.selectedIndex];
