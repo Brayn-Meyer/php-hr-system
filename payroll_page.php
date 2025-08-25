@@ -15,7 +15,7 @@
         <?php
             echo "<br>";
 
-            $payrolls = "SELECT employeeInformation.name, employeeInformation.position, payrolldata.hoursWorked, payrolldata.leaveDeductions, payrolldata.finalSalary FROM employeeInformation INNER JOIN payrolldata ON employeeInformation.employeeId = payrolldata.employeeId";
+            $payrolls = "SELECT employeeInformation.name, employeeInformation.position, payrolldata.id, payrolldata.hoursWorked, payrolldata.leaveDeductions, payrolldata.finalSalary FROM employeeInformation INNER JOIN payrolldata ON employeeInformation.employeeId = payrolldata.employeeId";
             $stmt = $pdo->query($payrolls);
 
             echo "<table>
@@ -25,16 +25,26 @@
                     <th>Hours Worked</th>
                     <th>Leave Days Taken</th>
                     <th>Final Salary</th>
+                    <th>Actions</th>
                 </tr> ";
             
             if ($stmt->rowCount() > 0) {
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<tr>";
-                    echo "<td>" . $row["name"]."</td>".  
-                         "<td>" . $row["position"]."</td>".
-                         "<td>" . $row["hoursWorked"]."</td>" .
-                         "<td>" . $row["leaveDeductions"]."</td>".
-                         "<td>" . $row["finalSalary"]."</td>";
+                    echo    "<td>" . $row["name"]."</td>".  
+                            "<td>" . $row["position"]."</td>".
+                            "<td>" . $row["hoursWorked"]."</td>" .
+                            "<td>" . $row["leaveDeductions"]."</td>".
+                            "<td>" . $row["finalSalary"]."</td>" .
+                            "<td>
+                                <form action='edit_payroll.php' method='post'>
+                                    <input type='hidden' name='id' value='" . $row["id"] . "'>
+                                    <input type='hidden' name='name' value='" . $row["name"] . "'>
+                                    <input type='hidden' name='hoursWorked' value='" . $row["hoursWorked"] . "'>
+                                    <input type='hidden' name='leaveDeductions' value='" . $row["leaveDeductions"] . "'>
+                                    <button type='submit'>Edit</button>
+                                </form>
+                            </td>";
                     echo "<tr>";
                 }
             } else {
