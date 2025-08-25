@@ -63,7 +63,7 @@
                         "<td>" . $row["employmentHistory"] . "</td>" .
                         "<td>" . $row["contact"] . "</td>" .
                         "<td>
-                            <form method='POST' action='edit_employee_p1.php' style='display:inline;'>
+                            <form method='POST' action='edit_employee.php' style='display:inline;'>
                                 <input type='hidden' name='id' value='" . $row['employeeId'] . "'>
                                 <input type='hidden' name='name' value='" . $row['name'] . "'>
                                 <input type='hidden' name='position' value='" . $row['position'] . "'>

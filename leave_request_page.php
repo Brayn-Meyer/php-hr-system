@@ -47,7 +47,7 @@
         <?php
             echo "<br>";
 
-            $leave = "SELECT employeeInformation.name, employeeInformation.department, leaverequests.date, leaverequests.reason, leaverequests.status FROM employeeInformation INNER JOIN leaverequests ON employeeInformation.employeeId = leaverequests.employeeId";
+            $leave = "SELECT employeeInformation.name, employeeInformation.department, leaverequests.id, leaverequests.date, leaverequests.reason, leaverequests.status FROM employeeInformation INNER JOIN leaverequests ON employeeInformation.employeeId = leaverequests.employeeId";
             $stmt = $pdo->query($leave);
 
             echo "<table>
@@ -63,29 +63,41 @@
             if ($stmt->rowCount() > 0) {
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<tr>";
-                    echo "<td>" . $row["name"]."</td>".  
-                            "<td>" . $row["department"]."</td>".
-                            "<td>" . $row["date"]."</td>" .
-                            "<td>" . $row["reason"]."</td>" .
-                            "<td>" . $row["status"]."</td>" .
-                            "<td>";
-                                if ($row["status"] == "Pending") {
-                                    echo   "<form>
-                                                <input type='text' value='Approved' hidden>
-                                                <button>Approve</button>
-                                            </form>
-                                            <form>
-                                                <input type='text' value='Denied' hidden>
-                                                <button>Deny</button>
-                                            </form>";
-                                }
-                                
-                                echo   "<form>
-                                            <button>Edit</button>
-                                            <button>Delete</button>
-                                        </form>
-                            </td>";
-                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($row["name"]) . "</td>" .
+                        "<td>" . htmlspecialchars($row["department"]) . "</td>" .
+                        "<td>" . htmlspecialchars($row["date"]) . "</td>" .
+                        "<td>" . htmlspecialchars($row["reason"]) . "</td>" .
+                        "<td>" . htmlspecialchars($row["status"]) . "</td>" .
+                        "<td>";
+
+                    if ($row["status"] == "Pending") {
+                        echo "<form action='edit_leave_status.php' method='post' style='display:inline;'>
+                                <input type='hidden' name='id' value='" . $row["id"] . "'>
+                                <input type='hidden' name='status' value='Approved'>
+                                <button type='submit'>Approve</button>
+                            </form>
+                            <form action='edit_leave_status.php' method='post' style='display:inline;'>
+                                <input type='hidden' name='id' value='" . $row["id"] . "'>
+                                <input type='hidden' name='status' value='Denied'>
+                                <button type='submit'>Deny</button>
+                            </form>";
+                    } else {
+                        echo "<form action='edit_leave.php' method='post' style='display:inline;'>
+                                <input type='hidden' name='id' value='" . $row["id"] . "'>
+                                <input type='hidden' name='name' value='" . $row["name"] . "'>
+                                <input type='hidden' name='date' value='" . $row["date"] . "'>
+                                <input type='hidden' name='reason' value='" . $row["reason"] . "'>
+                                <input type='hidden' name='status' value='" . $row["status"] . "'>
+                                <button type='submit'>Edit</button>
+                            </form>
+                            <form action='delete_leave.php' method='post' 
+                                onsubmit=\"return confirm('Are you sure you want to delete this record?');\" style='display:inline;'>
+                                <input type='hidden' name='id' value='" . $row["id"] . "'>
+                                <button type='submit'>Delete</button>
+                            </form>";
+                    }
+                    echo "</td>";
+                    echo "</tr>";
                 }
             } else {
                 echo "No leave request found.";
