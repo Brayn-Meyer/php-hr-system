@@ -39,7 +39,7 @@
                 <input value='$salary' name='salary' type='number'>
                 <br>
                 <label for='e_employment_history'>Employment History : </label>
-                <input value='$employmentHistory' name='employment_history' type='text'>
+                <input value='$employmentHistory' name='employmentHistory' type='text'>
                 <br>
                 <label for='e_contact'>Contact : </label>
                 <input value='$contact' name='contact' type='text'>
