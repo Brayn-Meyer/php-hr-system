@@ -4,12 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        .content {
-            margin-left: 240px; /* 220px sidebar + 20px gap */
-            padding: 20px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="components/style.css">
 </head>
 <body>
     <?php  

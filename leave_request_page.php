@@ -4,12 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        .content {
-            margin-left: 240px; /* 220px sidebar + 20px gap */
-            padding: 20px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="components/style.css">
 </head>
 <body>
     <?php  
@@ -59,6 +54,7 @@
 
             echo "<table>
                 <tr>
+                    <th></th>
                     <th>Name</th>
                     <th>Department</th>
                     <th>Date</th>
@@ -69,8 +65,15 @@
             
             if ($stmt->rowCount() > 0) {
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    // Generate initials from name
+                    $nameParts = explode(" ", $row["name"]);
+                    $initials = "";
+                    foreach ($nameParts as $part) {
+                        $initials .= strtoupper(substr($part, 0, 1));
+                    }
                     echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row["name"]) . "</td>" .
+                    echo "<td class='intial-td'><div class='initial-badge'>" . htmlspecialchars($initials) . "</div></td>" .
+                        "<td>" . htmlspecialchars($row["name"]) . "</td>" .
                         "<td>" . htmlspecialchars($row["department"]) . "</td>" .
                         "<td>" . htmlspecialchars($row["date"]) . "</td>" .
                         "<td>" . htmlspecialchars($row["reason"]) . "</td>" .
