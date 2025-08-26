@@ -45,7 +45,7 @@
                             "<td>" . $row["position"]."</td>".
                             "<td>" . $row["hoursWorked"]."</td>" .
                             "<td>" . $row["leaveDeductions"]."</td>".
-                            "<td>" . $row["finalSalary"]."</td>" .
+                            "<td>R" . $row["finalSalary"]."</td>" .
                             "<td>
                                 <form action='edit_payroll.php' method='post'>
                                     <input type='hidden' name='id' value='" . $row["id"] . "'>
