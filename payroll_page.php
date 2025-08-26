@@ -15,7 +15,7 @@
         <?php
             echo "<br>";
 
-            $payrolls = "SELECT employeeInformation.name, employeeInformation.position, payrolldata.id, payrolldata.hoursWorked, payrolldata.leaveDeductions, payrolldata.finalSalary FROM employeeInformation INNER JOIN payrolldata ON employeeInformation.employeeId = payrolldata.employeeId";
+            $payrolls = "SELECT employeeInformation.name, employeeInformation.position, employeeinformation.salary, payrolldata.id, payrolldata.hoursWorked, payrolldata.leaveDeductions, payrolldata.finalSalary FROM employeeInformation INNER JOIN payrolldata ON employeeInformation.employeeId = payrolldata.employeeId";
             $stmt = $pdo->query($payrolls);
 
             echo "<table>
@@ -40,6 +40,7 @@
                                 <form action='edit_payroll.php' method='post'>
                                     <input type='hidden' name='id' value='" . $row["id"] . "'>
                                     <input type='hidden' name='name' value='" . $row["name"] . "'>
+                                    <input type='hidden' name='salary' value='" . $row["salary"] . "'>
                                     <input type='hidden' name='hoursWorked' value='" . $row["hoursWorked"] . "'>
                                     <input type='hidden' name='leaveDeductions' value='" . $row["leaveDeductions"] . "'>
                                     <button type='submit'>Edit</button>
