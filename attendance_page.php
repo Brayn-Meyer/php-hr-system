@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .content {
+            margin-left: 240px; /* 220px sidebar + 20px gap */
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-    <?php 
+    <?php  
         include "components/sidebar.php";
         include "backend/database.php";
     ?>
+    <div class="content">
     <h1>ATTENDANCE PAGE</h1>
     <div>
         <?php
